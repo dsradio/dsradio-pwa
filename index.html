@@ -1263,10 +1263,11 @@
     setInterval(updateClock, 1000); updateClock();
     function vibrate(ms) { if (navigator.vibrate) navigator.vibrate(ms); }
 
-    window.addEventListener('DOMContentLoaded', () => {
-        setInterval(updatePlayerSchedule, 60000); setInterval(checkReminders, 60000);
-        setTimeout(updatePlayerSchedule, 500); fetchRadioData(); setInterval(fetchRadioData, 10000);
-    });
+    setInterval(updatePlayerSchedule, 60000); 
+    setInterval(checkReminders, 60000);
+    setTimeout(updatePlayerSchedule, 500); 
+    fetchRadioData(); 
+    setInterval(fetchRadioData, 10000);
 
     // ============================================
     // ИГРА 1: SYNTHWAVE CAR
