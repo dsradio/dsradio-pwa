@@ -642,7 +642,7 @@
             isIntentionallyPaused = false;
             playBtn.classList.add('loading'); 
             
-            radioSream.src radioStream.src = streamUrl + "?t=" + Date.now();
+            radioStream.src = streamUrl + "?t=" + Date.now();
             radioStream.load();
             let playPromise = radioStream.play();
             if (playPromise !== undefined) {
@@ -679,7 +679,7 @@
             playBtn.classList.add('loading');
             setTimeout(() => {
                 if (!isIntentionallyPaused) {
-                    radioSream.src radioStream.src = streamUrl + "?t=" + Date.now();
+                   radioStream.src = streamUrl + "?t=" + Date.now();
                     radioStream.load();
                     radioStream.play().catch(e => console.warn(e));
                 }
