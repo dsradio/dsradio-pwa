@@ -729,7 +729,7 @@
         const fsBlurImg = document.getElementById('fs-blur-bg-img');
 
         artImages.forEach(img => img.style.opacity = 0);
-        await new Promise(r => setTimeout(r, 1500));
+        await new Promise(r => setTimeout(r, 150));
 
         artImages.forEach(img => {
             img.onload = () => { img.style.opacity = 1; };
