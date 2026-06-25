@@ -13,7 +13,7 @@
     <link rel="manifest" href="manifest.json">
 
     <title>DSRadio.lv App</title>
-    <link rel="apple-touch-icon" href="logo-center.jpeg">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -642,7 +642,7 @@
             isIntentionallyPaused = false;
             playBtn.classList.add('loading'); 
             
-            tradioSream.src = streamUrl;
+            radioSream.src = streamUrl;
             radioStream.load();
             let playPromise = radioStream.play();
             if (playPromise !== undefined) {
@@ -679,7 +679,7 @@
             playBtn.classList.add('loading');
             setTimeout(() => {
                 if (!isIntentionallyPaused) {
-                    tradioSream.src = streamUrl;
+                    radioSream.src = streamUrl;
                     radioStream.load();
                     radioStream.play().catch(e => console.warn(e));
                 }
