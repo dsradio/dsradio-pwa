@@ -343,10 +343,41 @@ top: 2px; }
         
         .fs-particles-layer { position: absolute; inset: 0; pointer-events: none; z-index: 1; opacity: 0; transition: opacity 0.5s; background-image: radial-gradient(circle, var(--accent) 1px, transparent 2px), radial-gradient(circle, var(--digital) 1px, transparent 2px), radial-gradient(circle, #fff 1.5px, transparent 3px); background-size: 100px 100px, 150px 150px, 200px 200px; }
         body.fx-particles .fs-particles-layer { opacity: 0.5; animation: particle-drift 30s linear infinite; }
-
+            
+/* === WELCOME GATE === */
+        .welcome-gate { position: fixed; inset: 0; background: rgba(5,5,5,0.95); z-index: 9999999; display: flex; justify-content: center; align-items: center; backdrop-filter: blur(15px); transition: opacity 0.5s ease, visibility 0.5s; }
+        .welcome-gate.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .gate-content { background: linear-gradient(145deg, #111, #050505); border: 1px solid var(--btn-border); padding: 30px 20px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.9); }
+        .gate-chk-row { display: flex; align-items: flex-start; justify-content: center; gap: 10px; font-size: 12px; color: #ccc; margin-bottom: 25px; text-align: left; cursor: pointer; }
+        .gate-chk-row input { width: 20px; height: 20px; margin-top: -2px; accent-color: var(--digital); cursor: pointer; flex-shrink: 0; }
+        .gate-btn { width: 100%; padding: 16px; font-family: 'MatrixType Display', monospace; font-size: 18px; font-weight: bold; background: #111; color: #555; border: 2px solid #333; border-radius: 12px; transition: 0.3s; pointer-events: none; letter-spacing: 1px; }
+        .gate-btn.ready { background: var(--btn-bg); color: var(--digital); border-color: var(--digital); pointer-events: auto; box-shadow: 0 0 20px rgba(0, 255, 204, 0.4), inset 0 0 10px rgba(0, 255, 204, 0.2); cursor: pointer; }
+        .gate-btn.ready:active { transform: scale(0.96); }
+        .gate-hint { font-size: 11px; color: #666; margin-top: 20px; line-height: 1.4; }
     </style>
 </head>
 <body>
+        <div id="welcome-gate" class="welcome-gate">
+    <div class="gate-content">
+        <img src="logo-header.png" alt="DSRadio" style="width: 180px; margin-bottom: 20px;">
+        <div style="font-family: 'MatrixType Display', monospace; color: var(--digital); font-size: 20px; margin-bottom: 10px; text-transform: uppercase;">System Init...</div>
+        <p style="color: #aaa; font-size: 13px; line-height: 1.5; margin-bottom: 25px;">
+            Welcome to Dance Station Radio.<br>
+            To enter the club, please accept our rules.
+        </p>
+        
+        <label class="gate-chk-row">
+            <input type="checkbox" id="gate-agree-chk" onchange="toggleGateBtn()">
+            <span>I agree to the <a href="https://www.dsradio.lv/privacypolicy" target="_blank" style="color: var(--digital); text-decoration: underline;">Terms & Privacy Policy</a></span>
+        </label>
+        
+        <button id="gate-enter-btn" class="gate-btn" onclick="enterClub()">[ ENTER THE CLUB ]</button>
+        
+        <div class="gate-hint">
+            *To install this app, tap <b>Share</b> (iOS) or <b>Menu</b> (Android), then select <b>Add to Home Screen</b>.
+        </div>
+    </div>
+</div>
 
     <div id="app-container">
     <div class="blur-background"><img id="blur-bg-img" src="logo-center.jpeg" alt="blur"></div>
@@ -1640,6 +1671,31 @@ top: 2px; }
             updateThemeColor(0);
         }
     });
+        // ============================================
+    // WELCOME GATE LOGIC
+    // ============================================
+    document.addEventListener("DOMContentLoaded", () => {
+        if (localStorage.getItem('dsr_agreed_terms') === 'true') {
+            document.getElementById('welcome-gate').classList.add('hidden');
+        }
+    });
+
+    function toggleGateBtn() {
+        const btn = document.getElementById('gate-enter-btn');
+        if (document.getElementById('gate-agree-chk').checked) {
+            btn.classList.add('ready');
+            vibrate(20);
+        } else {
+            btn.classList.remove('ready');
+        }
+    }
+
+    function enterClub() {
+        vibrate(50);
+        localStorage.setItem('dsr_agreed_terms', 'true');
+        document.getElementById('welcome-gate').classList.add('hidden');
+        sendStatToServer('agreed_terms', 'yes');
+    }
 </script>
 
 </body>
